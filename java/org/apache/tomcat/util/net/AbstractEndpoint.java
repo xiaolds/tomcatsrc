@@ -221,6 +221,7 @@ public abstract class AbstractEndpoint<S> {
 
     /**
      * External Executor based thread pool.
+     * 用于执行任务 TODO
      */
     private Executor executor = null;
     public void setExecutor(Executor executor) {
