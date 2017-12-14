@@ -988,7 +988,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
             // Parsing the request header
             try {
                 setRequestLineReadTimeout();
-
+                // 处理请求行
                 if (!getInputBuffer().parseRequestLine(keptAlive)) {
                     if (handleIncompleteRequestLineRead()) {
                         break;

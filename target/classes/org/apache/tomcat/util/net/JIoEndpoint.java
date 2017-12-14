@@ -26,6 +26,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 
 import org.apache.juli.logging.Log;
@@ -59,6 +60,16 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
     private static final Log log = LogFactory.getLog(JIoEndpoint.class);
 
     // ----------------------------------------------------------------- Fields
+
+    @Override
+    public void setExecutor(Executor executor) {
+        super.setExecutor(executor);
+    }
+
+    @Override
+    public Executor getExecutor() {
+        return super.getExecutor();
+    }
 
     /**
      * Associated server socket.
@@ -136,7 +147,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
 
 
     /**
-     * Async timeout thread
+     * Async timeout thread TODO for timeout
      */
     protected class AsyncTimeout implements Runnable {
         /**
@@ -302,6 +313,8 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
             this.status = status;
         }
 
+        // TODO 实际的处理逻辑在此，实际上这里也做了一层转化
+        // 具体的业务由Handler处理
         @Override
         public void run() {
             boolean launch = false;
@@ -438,7 +451,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
             running = true;
             paused = false;
 
-            // Create worker collection
+            // Create worker collection, JIOEndpoint 中的Executor使用的内部创建的Executor
             if (getExecutor() == null) {
                 createExecutor();
             }
@@ -546,6 +559,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
             if (!running) {
                 return false;
             }
+            // 交给Executor 去处理，Executor 会维护一个线程池，交由特定的线程执行
             getExecutor().execute(new SocketProcessor(wrapper));
         } catch (RejectedExecutionException x) {
             log.warn("Socket processing request was rejected for:"+socket,x);
