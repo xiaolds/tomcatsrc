@@ -402,6 +402,7 @@ public class CoyoteAdapter implements Adapter {
 
     /**
      * Service method.
+     * // TODO Adapter method. 主要是将request, response 转交给合适的容器处理
      */
     @Override
     public void service(org.apache.coyote.Request req,

@@ -46,6 +46,7 @@ public class Http11Processor extends AbstractHttp11Processor<Socket> {
     protected Log getLog() {
         return log;
     }
+    
 
    // ------------------------------------------------------------ Constructor
 

@@ -1078,6 +1078,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
                     rp.setStage(org.apache.coyote.Constants.STAGE_SERVICE);
 
                     // todo 重要：调用Adapter由Tcp-->Http转换，完成servlet调用
+                    // Which Adapter TODO
                     adapter.service(request, response);
                     // Handle when the response was committed before a serious
                     // error occurred.  Throwing a ServletException should both

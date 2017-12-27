@@ -91,7 +91,7 @@ public final class Bootstrap {
         }
     }
 
-
+    // TODO 装载ClassLoader
     private ClassLoader createClassLoader(String name, ClassLoader parent)
         throws Exception {
 
@@ -254,7 +254,7 @@ public final class Bootstrap {
             param[0] = arguments;
         }
 
-        //catalinaDaemon  对象为 Catalina  实例  执行的为 catalina 的 stop 方法
+        //catalinaDaemon  对象为 Catalina  实例  执行的为 catalina 的 start 方法
         Method method =
             catalinaDaemon.getClass().getMethod(methodName, paramTypes);
         if (log.isDebugEnabled())
@@ -452,7 +452,7 @@ public final class Bootstrap {
             } else if (command.equals("start")) {
                 daemon.setAwait(true);
                 daemon.load(args);
-                daemon.start();
+                daemon.start(); // 会阻塞在这里
             } else if (command.equals("stop")) {
                 daemon.stopServer(args);
             } else if (command.equals("configtest")) {
